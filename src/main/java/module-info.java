@@ -6,6 +6,7 @@ module org.example.gymm {
     requires java.sql;
     requires java.sql.rowset;
     requires jfreechart;
+    requires jbcrypt;
 
 
     opens org.example.gymm to javafx.fxml;

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="414.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.memberController">
+   <children>
+      <AnchorPane prefHeight="367.0" prefWidth="462.0" stylesheets="@../../../style/dashboardDesine.css">
+         <children>
+            <FontAwesomeIconView fill="#fff2f2" glyphName="USER" layoutX="43.0" layoutY="89.0" size="5em" />
+            <Label fx:id="username" layoutX="105.0" layoutY="70.0" text="Name" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="21.0" />
+               </font>
+            </Label>
+            <Button fx:id="logout" layoutX="21.0" layoutY="468.0" mnemonicParsing="false" onAction="#logout" prefHeight="32.0" prefWidth="43.0" stylesheets="@../../../style/dashboardDesine.css">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="2em" />
+               </graphic>
+               <styleClass>
+                  <String fx:value="logout" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </Button>
+            <Label layoutX="73.0" layoutY="474.0" text="Logout" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="162.0" prefHeight="20.0" prefWidth="66.0" text="ID/Name" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <TextField fx:id="id_member" layoutX="155.0" layoutY="159.0" prefHeight="26.0" prefWidth="106.0" />
+            <Button fx:id="search" layoutX="293.0" layoutY="158.0" mnemonicParsing="false" onAction="#searchMember" styleClass="btn1" stylesheets="@../../../style/dashboardDesine.css" text="Search">
+               <graphic>
+                  <FontAwesomeIconView glyphName="SEARCH" />
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="close" layoutX="353.0" layoutY="14.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="30.0" styleClass="close-btn" stylesheets="@../../../style/dashboardDesine.css">
+               <graphic>
+                  <FontAwesomeIconView glyphName="CLOSE" size="2em" text="" wrappingWidth="24.914260864257812" />
+               </graphic>
+            </Button>
+            <Line endX="280.3999938964844" layoutX="119.0" layoutY="120.0" startX="-100.0" stroke="WHITE" />
+            <Label layoutX="101.0" layoutY="43.0" text="Welcome" textFill="WHITE">
+               <font>
+                  <Font name="Bell MT" size="17.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="20.0" layoutY="231.0" prefHeight="179.0" prefWidth="348.0" stylesheets="@../../../style/dashboardDesine.css">
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+               <children>
+                  <TableView fx:id="memberTable" prefHeight="200.0" prefWidth="381.0">
+                    <columns>
+                      <TableColumn fx:id="memberId" prefWidth="56.800045013427734" text="ID" />
+                      <TableColumn fx:id="memberName" prefWidth="109.5999755859375" text="Name" />
+                        <TableColumn fx:id="memberStart" prefWidth="104.00001525878906" text="StartDay" />
+                        <TableColumn fx:id="memberEnd" prefWidth="103.20001220703125" text="EndDay" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </children>
+         <styleClass>
+            <String fx:value="nav" />
+            <String fx:value="shadow" />
+            <String fx:value="nav-border" />
+         </styleClass>
+      </AnchorPane>
+   </children>
+</StackPane>

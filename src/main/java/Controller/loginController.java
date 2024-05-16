@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class loginController implements Initializable {
     @FXML
@@ -75,6 +76,15 @@ public class loginController implements Initializable {
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
+    // Hàm để mã hóa mật khẩu sử dụng BCrypt
+    private static String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    // Hàm để kiểm tra mật khẩu đã được mã hóa sử dụng BCrypt
+    private static boolean checkPassword(String plainPassword, String hashedPasswordFromDB) {
+        return BCrypt.checkpw(plainPassword, hashedPasswordFromDB);
+    }
 
     // Kiểm tra tính hợp lệ của địa chỉ email
     private boolean isValidEmail(String email) {
@@ -87,14 +97,13 @@ public class loginController implements Initializable {
         return matcher.matches() && email.endsWith("@gmail.com");
     }
     public void login() {
-        String sql = "SELECT * FROM admin WHERE username = ? and password = ?";
+        String sql = "SELECT * FROM admin WHERE username = ?";
         Alert alert;
 
         try (Connection connect = database.connecDb();
              PreparedStatement prepare = connect.prepareStatement(sql)) {
 
             prepare.setString(1, si_username.getText());
-            prepare.setString(2, si_password.getText());
             ResultSet result = prepare.executeQuery();
 
             if (si_username.getText().isEmpty() || si_password.getText().isEmpty()) {
@@ -103,10 +112,30 @@ public class loginController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Vui lòng nhập hết vào các ô trống!");
                 alert.showAndWait();
-            } else if (result.next()) {
-                database.username = si_username.getText();
-                openNewScene();
+            }else if (result.next()) {
+
+                String hashedPasswordFromDB = result.getString("password");
+                String inputUsername = si_username.getText();
+                String inputPassword = si_password.getText();
+
+                if ("admin".equals(inputUsername) && "admin".equals(inputPassword)){
+                    //Đăng nhập admin
+                    database.username = si_username.getText();
+                    openNewScene();
+                } else if (checkPassword(inputPassword, hashedPasswordFromDB)) {
+                    // Mật khẩu đúng, thực hiện đăng nhập member
+                    database.username = si_username.getText();
+                    openNewSceneMember();
+                } else {
+                    // Mật khẩu không đúng
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Tên người dùng/mật khẩu không đúng");
+                    alert.showAndWait();
+                }
             } else {
+                // Tên người dùng không tồn tại
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");
                 alert.setHeaderText(null);
@@ -116,11 +145,27 @@ public class loginController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
     private void openNewScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/gymm/dashboard.fxml"));
+            Parent root = loader.load();
+            // Tạo một Stage mới
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.initStyle(StageStyle.UNDECORATED);
+            // Đóng Stage hiện tại
+            Stage currentStage = (Stage) si_loginBtn.getScene().getWindow();
+            currentStage.close();
+            // Hiển thị Stage mới
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void openNewSceneMember(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/gymm/member.fxml"));
             Parent root = loader.load();
             // Tạo một Stage mới
             Stage newStage = new Stage();
@@ -162,17 +207,21 @@ public class loginController implements Initializable {
                     alert.setContentText("Password từ 8 kí tự trở lên --");
                     alert.showAndWait();
                 } else {
+                    String plainPassword = su_password.getText();
+                    String hashedPassword = hashPassword(plainPassword); // Mã hóa mật khẩu
+
                     prepare = connect.prepareStatement(sql);
                     prepare.setString(1, su_email.getText());
                     prepare.setString(2, su_username.getText());
-                    prepare.setString(3, su_password.getText());
+                    prepare.setString(3, hashedPassword);
                     alert = new Alert(Alert.AlertType.INFORMATION);
+                    prepare.executeUpdate();
+
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Tạo tài khoản thành công!");
                     alert.showAndWait();
 
-                    prepare.executeUpdate();
                     su_email.setText("");
                     su_username.setText("");
                     su_password.setText("");

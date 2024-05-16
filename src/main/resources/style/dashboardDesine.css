@@ -80,6 +80,12 @@
     -fx-text-fill: #fff;
     -fx-font-size: 14px;
 }
+.btn1{
+    -fx-background-color:  linear-gradient(to bottom right, #ade3ff, #d2c7ff);
+    -fx-border-radius: 6px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
 .btn:hover{
     -fx-background-color: #4694bb;
 }

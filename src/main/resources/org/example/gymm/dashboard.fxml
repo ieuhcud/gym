@@ -214,8 +214,8 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="coaches_phoneNum" layoutX="130.0" layoutY="268.0" prefHeight="26.0" prefWidth="145.0" styleClass="textfield" stylesheets="@../../../style/dashboardDesine.css" />
-                                    <Button fx:id="coaches_addBtn" layoutX="50.0" layoutY="363.0" mnemonicParsing="false" onAction="#coachesAddBtn" prefHeight="30.0" prefWidth="72.0" styleClass="btn" stylesheets="@../../../style/dashboardDesine.css" text="Add" />
-                                    <Button fx:id="coaches_updateBtn" layoutX="156.0" layoutY="363.0" mnemonicParsing="false" onAction="#coachesUpdateBtn" prefHeight="30.0" prefWidth="72.0" styleClass="btn" stylesheets="@../../../style/dashboardDesine.css" text="Update" />
+                                    <Button fx:id="coaches_addBtn" layoutX="53.0" layoutY="363.0" mnemonicParsing="false" onAction="#coachesAddBtn" prefHeight="30.0" prefWidth="72.0" styleClass="btn" stylesheets="@../../../style/dashboardDesine.css" text="Add" />
+                                    <Button fx:id="coaches_updateBtn" layoutX="159.0" layoutY="363.0" mnemonicParsing="false" onAction="#coachesUpdateBtn" prefHeight="30.0" prefWidth="72.0" styleClass="btn" stylesheets="@../../../style/dashboardDesine.css" text="Update" />
                                     <Button fx:id="coaches_resetBtn" layoutX="53.0" layoutY="418.0" mnemonicParsing="false" onAction="#coachesClearBtn" prefHeight="30.0" prefWidth="72.0" styleClass="btn" stylesheets="@../../../style/dashboardDesine.css" text="Clear" />
                                     <Button fx:id="coaches_deleteBtn" layoutX="159.0" layoutY="418.0" mnemonicParsing="false" onAction="#coachesDeleteBtn" prefHeight="30.0" prefWidth="72.0" styleClass="btn" stylesheets="@../../../style/dashboardDesine.css" text="Delete" />
                                     <Label layoutX="66.0" layoutY="310.0" text="Status:">
@@ -351,7 +351,7 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView fx:id="payment_tableView" layoutX="8.0" layoutY="6.0" prefHeight="522.0" prefWidth="582.0">
+                                    <TableView fx:id="payment_tableView" layoutX="8.0" layoutY="6.0" onMouseClicked="#paymentSelect" prefHeight="522.0" prefWidth="582.0">
                                       <columns>
                                         <TableColumn fx:id="payment_col_customerID" prefWidth="83.19997024536133" text="Member ID" />
                                         <TableColumn fx:id="payment_col_name" prefWidth="187.1999969482422" text="Name" />

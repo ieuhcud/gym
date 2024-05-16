@@ -356,7 +356,8 @@ public class mainController implements Initializable {
             e.printStackTrace();
         }
     }
-    //phương thức của coach
+
+    //phương thức của coach---------------------------------
     private ObservableList<coachData>coachesListData;
     public void coachesShowData(){
         coachesListData = coachesDataList();
@@ -564,7 +565,8 @@ public class mainController implements Initializable {
         coaches_address.setText((cd.getAddress()));
         coaches_phoneNum.setText(String.valueOf(cd.getPhoneNum()));
     }
-    //Phương thức của member
+
+    //Phương thức của member-------------------------------------------
     private ObservableList<memberData> membersListData;
     public void membersShowData(){
         membersListData = membersDataList();
@@ -632,8 +634,8 @@ public class mainController implements Initializable {
                         // Tính toán số ngày giữa startDate và endDate
                         totalDay = (int) ChronoUnit.DAYS.between(members_startDate.getValue(), members_endDate.getValue());
 
-                        // Tính giá trị price dựa trên số ngày và mức giá 20,000 VND/ngày
-                        price = (totalDay * 20000);
+                        // Tính giá trị price dựa trên số ngày và mức giá 10,000 VND/ngày
+                        price = (totalDay * 10000);
 
                         prepare.setString(9, String.valueOf(price));
                         prepare.setString(10, (String) members_status.getSelectionModel().getSelectedItem());
@@ -659,7 +661,7 @@ public class mainController implements Initializable {
     public void memberUpdate(){
         // Tính số ngày giữa members_startDate và members_endDate
         totalDay = (int)ChronoUnit.DAYS.between(members_startDate.getValue(), members_endDate.getValue());
-        price = (totalDay * 20000);
+        price = (totalDay * 10000);
 
         String sql = "UPDATE member SET name = '"
                 + members_name.getText() + "', address = '"
@@ -763,9 +765,7 @@ public class mainController implements Initializable {
         ObservableList listData = FXCollections.observableArrayList(s1);
         members_schedule.setItems(listData);
     }
-
     private String memberStatus[] = {"Paid", "Unpaid"};
-
     public void membersStatus(){
         List<String> ms = new ArrayList<>();
 
@@ -776,7 +776,6 @@ public class mainController implements Initializable {
         ObservableList listData = FXCollections.observableArrayList(memberStatus);
         members_status.setItems(listData);
     }
-
     public ObservableList<memberData> membersDataList(){
         ObservableList<memberData> listData = FXCollections.observableArrayList();
 
@@ -827,7 +826,8 @@ public class mainController implements Initializable {
         members_schedule.setValue(String.valueOf(md.getSchedule()));
         members_status.setValue(String.valueOf(md.getStatus()));
     }
-    //Phương thức thanh toán
+
+    //Phương thức thanh toán--------------------------------------------------
     public void paymentMemberId(){
         String sql = "SELECT memberId FROM member WHERE status = 'Unpaid' ";
 
@@ -1040,6 +1040,19 @@ public class mainController implements Initializable {
 
         payment_tableView.setItems(paymentListData);
     }
+    public void paymentSelect(){
+        memberData md = payment_tableView.getSelectionModel().getSelectedItem();
+        int num = payment_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num-1) < -1)return;
+
+        payment_col_customerID.setText(md.getMemberId());
+        payment_col_name.setText(md.getName());
+
+
+    }
+
+    //----------------------------------------------------------
     public void switchForm(ActionEvent event){
 
         if (event.getSource() == dashboard_btn){
@@ -1109,9 +1122,8 @@ public class mainController implements Initializable {
             paymentShowData();
         }
     }
-
-    private double x = 0;
-    private double y = 0;
+//    private double x = 0;
+//    private double y = 0;
     public void logout() {
         // Hiển thị hộp thoại xác nhận
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
